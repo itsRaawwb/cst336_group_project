@@ -102,7 +102,7 @@ function filterProducts()
 
 		<title>Team Project</title>
 		
-		<link href="./Lab 5_ Otter Express - Product Catalog_files/styles.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
 
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 
@@ -121,14 +121,14 @@ function filterProducts()
                 // displayCategories();
                 // ?>
             </select>
-            
+            <br>
             Max ProductCost:
             <input type="number" min="0" name="maxProductCost" value=="<?=$_GET['maxProductCost'] ?>">
-            
+            <br>
             <input type="checkbox" name="healthyChoice" id="healthyChoice"  <?=isset($_GET['healthyChoice']) ? "checked" : "" ?> />
 			<label for="healthyChoice">Healthy Choice</label>
-
-			OrderBy:
+			<br>
+			Order By:
 			<select name="orderBy">
 			    <option value="ProductCost">ProductCost</option>
 			    <option value="ProductName">Name</option>
@@ -180,10 +180,10 @@ function filterProducts()
 					echo "$ " . $record['ProductCost'];
 					echo "</td>";
 					echo "<td>";
-					echo "$ " . $record['healthyChoice'];
+					echo $record['healthyChoice'];
 					echo "</td>";
 					echo "<td>";
-					echo "$ " . $record['ProductDescription'];
+					echo $record['ProductDescription'];
 					echo "</td>";
 					echo "</tr>";
 				}
@@ -199,6 +199,8 @@ function filterProducts()
 
 
         <footer>
+        	<hr>
+            <br>
             <br>
             CST 336 Team Project
             Robert Macias
