@@ -12,7 +12,7 @@ include 'includes/database.php'
         
     </head>
     <body>
-<? php
+<?php
     session_start();
     $page_title = "checkout";
     
@@ -22,7 +22,7 @@ include 'includes/database.php'
     if($action=='removed'){
         echo "<div class='alert alert-info'>";
             echo "<strong>{$name}</strong> was removed from your cart";
-        echo "</div>"
+        echo "</div>";
     }
     else if($action=='quantity_updated'){
         echo "<div class='alert alert-info'>";
@@ -79,7 +79,7 @@ include 'includes/database.php'
                     echo "<td><b>Total</b></td>";
                     echo "<td>&#36;{$total_price}</td>";
                     echo "<td>";
-                        echo "<a href='#' class='btn btn-success'>";
+                        echo "<a>";
                             echo "<span class='glyphicon glyphicon-shopping-cart'></span> Checkout";
                         echo "</a>";
                     echo "</td>";
