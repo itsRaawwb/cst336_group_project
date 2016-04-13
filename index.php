@@ -19,12 +19,38 @@
 
     </head>
     <body>
+        <header>
+            <h1>Otter Express Online</h1>
+        </header>
 
+        <form method = "get" action = "index.php">
+            Select Category:
+            <select name = "categoryId">
+                <!-- this will come from database -->
+            </select>
+            
+            Max Price:
+            <input type="number" min="0" name="maxPrice" value=="<?=$_GET['maxPrice'] ?>">
+            
+            <input type="checkbox" name="healthyChoice" id="healthyChoice"  <?=isset($_GET['healthyChoice']) ? "checked" : "" ?> />
+				<label for="healthyChoice">Healthy Choice</label>
 
+				OrderBy:
+				<select name="orderBy">
+					<option value="price">Price</option>
+					<option value="productName">Name</option>
+
+				</select>
+				<br />
+				<input type="submit" value="Search Products" name="searchForm" />
+			</form>
 
         <footer>
             <br>
-            
+            CST 336 Team Project
+            Robert Macias
+            Harrison Oglesby
+            Spring 2016
             
         </footer>
     </body>
