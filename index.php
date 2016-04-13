@@ -8,7 +8,7 @@ $conn = getDatabaseConnection();
 //function that returns all products in the Product table
 function displayAllProducts() {
 	global $conn;
-    $sql = "SELECT `ProductID`, `ProductName`, `ProductCost`, `ProductDescription`, `categoryID`, `healthyChoice` FROM `products` WHERE 1 LIMIT 0, 30 ";
+    $sql = "SELECT `ProductID`, `ProductName`, `ProductCost`, `ProductDescription`, `categoryID`, `healthyChoice` FROM `products` WHERE 1";
     $records = getDataBySQL($conn, $sql);
     return $records;
 }
@@ -103,7 +103,6 @@ function filterProducts()
         <form method = "GET" action = "index.php">
             Select Category:
             <select name = "Category">
-                <!-- this will come from database -->
                 <option value="0">All</option>
                 <option value="1">Entree</option>
                 <option value="6">Side</option>
@@ -150,18 +149,10 @@ function filterProducts()
 				}
 				
 				
-				// to prevent undefined index notice
-				$action = isset($_GET['action']) ? $_GET['action'] : "";
-				$name = isset($_GET['name']) ? $_GET['name'] : "";
-				//Tell users an item was added
-				if($action=='added'){
-				    echo "<div class='alert alert-info'>";
-				        echo "<strong>{$name}</strong> was added to your cart!";
-				    echo "</div>";
-				}
+
  
 
-				echo "<table border = 1>";
+				echo "<table class>";
 				echo "<tr>";
 				echo "<td id = 'colTitle'>";
 				echo "Name";
@@ -169,6 +160,17 @@ function filterProducts()
 				
 				echo "<td id = 'colTitle'>";
 				echo "Product Cost";
+				echo "</td>";
+				
+				
+				echo "<td id = 'colTitle'>";
+				// to prevent undefined index notice
+				$action = isset($_GET['action']) ? $_GET['action'] : "";
+				$name = isset($_GET['name']) ? $_GET['name'] : "";
+				//Tell users an item was added
+				if($action=='added'){
+				        echo "<strong>{$name}</strong> was added to your cart!";
+				}
 				echo "</td>";
 				echo "</tr>";
 
@@ -178,21 +180,22 @@ function filterProducts()
 					$id = $record['ProductID'];
 					$name = $record['ProductName'];
 					$cost = $record['ProductCost'];
+					$desc = $record['ProductDescription'];
 					
 					echo "<tr>";
 					echo "<td>";
-					echo "<a>";
+					echo "<a target='_blank' href='popup.php?id=".$desc."' onClick=\"window.open(this.href, 'popupwindow', width=400,height=300,scrollbars,resizable');return false;\">";
 					echo $name;
 					echo"</a>";
 					echo "</td>";
 					
-					echo "<td>";
-					echo "$ " . $cost;
+					echo "<td class='right-align'>";
+					echo $cost;
 					echo "</td>";
 					
-					echo "<td>";
+					echo "<td class='order'>";
 					echo "<a href=\"add_to_cart.php?id=$id&name=$name&cost=$cost\""; 
-						echo "<span></span>add to cart";
+						echo "<span></span>Order Item";
 					// echo "</a>";
 					echo "</td>";
 					
@@ -200,9 +203,10 @@ function filterProducts()
 				}
 				echo "</table>";
 
-				echo '<a href="checkout.php">Checkout</a>';
+				echo '<a class="fakebutton" href="checkout.php">Checkout</a>';
 				?>
 			</div>
+			
         <footer class="footer">
         	<hr>
             CST 336 Team Project<br />

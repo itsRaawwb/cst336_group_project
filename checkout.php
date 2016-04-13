@@ -8,7 +8,7 @@ include 'includes/database.php'
             <meta name="viewport" content="width=device-width">
             <title>Checkout</title>
             <link rel="shortcut icon" href="https://csumb.edu/sites/default/files/pixelotter.png" type="image/png">
-            <link rel="stylesheet" type="css" href="css/main.css">
+            <link rel="stylesheet" type="css" href="css/style.css">
         
     </head>
     <body>
@@ -55,7 +55,7 @@ include 'includes/database.php'
            
      
      
-            echo "<tr>";
+            echo "<tr class='total'>";
                     echo "<td><b>Total</b></td>";
                     echo "<td>".$_SESSION["totalCost"]."</td>";
                 echo "</tr>";
