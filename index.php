@@ -158,7 +158,13 @@ function filterProducts()
 				echo "Name";
 				echo "</td>";
 				echo "<td id = 'colTitle'>";
-				echo "ProductCost";
+				echo "Product Cost";
+				echo "</td>";
+				echo "<td id = 'colTitle'>";
+				echo "Healthy Choice";
+				echo "</td>";
+				echo "<td id = 'colTitle'>";
+				echo "Description";
 				echo "</td>";
 				echo "</tr>";
 
@@ -166,12 +172,18 @@ function filterProducts()
 				{
 					echo "<tr>";
 					echo "<td>";
-					echo "<a target = 'getProductIframe' href='getProductInfo.php?productId=" . $record['productId'] . "'>";
+					echo "<a target = 'getProductIframe' href='getProductInfo.php?ProductId=" . $record['ProductId'] . "'>";
 					echo $record['ProductName'];
 					echo "</a>";
 					echo "</td>";
 					echo "<td>";
 					echo "$ " . $record['ProductCost'];
+					echo "</td>";
+					echo "<td>";
+					echo "$ " . $record['healthyChoice'];
+					echo "</td>";
+					echo "<td>";
+					echo "$ " . $record['ProductDescription'];
 					echo "</td>";
 					echo "</tr>";
 				}
