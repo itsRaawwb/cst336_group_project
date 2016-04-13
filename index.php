@@ -117,7 +117,7 @@ function filterProducts()
             <br>
             
             Max ProductCost: $
-            <input type="number" min="4" max="50" name="maxProductCost" >
+            <input type="number" min="0" max="50" name="maxProductCost" >
             <br>
             <input type="checkbox" name="healthyChoice" id="healthyChoice"  value="healthy" />
 			<label for="healthyChoice">Healthy Choice</label>
@@ -136,7 +136,8 @@ function filterProducts()
 			<br />
 			<div style="float:left">
 				<?php
-				session_start();
+				
+				$temp=0;
 
 				//Displays all products by default
 				if (!isset($_GET['searchForm'])) 
@@ -147,32 +148,6 @@ function filterProducts()
 				{
 					$records = filterProducts();
 				}
-				
-
-				
-				
-				// $action = isset($_GET['action']) ? $_GET['action'] : "";
-				// $product_id = isset($_GET['']) ? $_GET['product_id'] : "1";
-				// $name = isset($_GET['name']) ? $_GET['name'] : "";
-				 
-				// if($action=='added'){
-				//     echo "<div class='alert alert-info'>";
-				//         echo "<strong>{$name}</strong> was added to your cart!";
-				//     echo "</div>";
-				// }
-				 
-				// if($action=='exists'){
-				//     echo "<div class='alert alert-info'>";
-				//         echo "<strong>{$name}</strong> already exists in your cart!";
-				//     echo "</div>";
-				// }
-							
-				
-				
-				
-				
-				
-				
 
 				echo "<table border = 1>";
 				echo "<tr>";
@@ -187,26 +162,31 @@ function filterProducts()
 
 				foreach ($records as $record) 
 				{
+					
+					$id = $record['ProductID'];
+					$name = $record['ProductName'];
+					$cost = $record['ProductCost'];
+					
+					
 					echo "<tr>";
 					echo "<td>";
-					echo $record['ProductName'];
+					echo "<a>";
+					echo $name;
+					echo"</a>";
 					echo "</td>";
 					
 					echo "<td>";
-					echo "$ " . $record['ProductCost'];
+					echo "$ " . $cost;
 					echo "</td>";
 					
 					echo "<td>";
-		                echo "<a href='add_to_cart.php?id={$id}&name={$name}'>";
-        	                echo "<span></span> Add to cart";
-    	                echo "</a>";
-	                echo "</td>";
-
+					echo "<a href=\"add_to_cart.php?id={$record['$id']}
+							&name={$record['$name']}&price={$record['$cost']}\""; 
+						echo "<span></span>add to cart";
+					// echo "</a>";
+					echo "</td>";
 					
 					echo "</tr>";
-					
-					
-					
 				}
 				echo "</table>";
 

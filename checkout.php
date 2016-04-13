@@ -48,8 +48,8 @@ include 'includes/database.php'
      
             // our table heading
             echo "<tr>";
-                echo "<th class='tableText'>Product Name</th>";
-                echo "<th>Price (USD)</th>";
+                echo "<th>Product Name</th>";
+                echo "<th>Price</th>";
                 echo "<th>Action</th>";
             echo "</tr>";
      
