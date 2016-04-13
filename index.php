@@ -7,8 +7,9 @@ $conn = getDatabaseConnection();
 
 //function that returns all products in the Product table
 function displayAllProducts() {
+	global $conn;
     $sql = "SELECT 'ProductName', 'ProductCost', 'ProductID' FROM 'products'";
-    $records = getDataBySQL($dbConn, $sql);
+    $records = getDataBySQL($conn, $sql);
     return $records;
 }
 
@@ -25,13 +26,13 @@ function isHealthyChoiceChecked()
 
 function displayCategories() 
 {
-
+	global $conn;
 
 	$sql = "SELECT categoryId, categoryName
         	FROM Category WHERE 1";
 
 			
-	$records = getDataBySQL($sql);
+	$records = getDataBySQL($conn ,$sql);
 	
 	foreach ($records as $record) 
 	{
