@@ -49,7 +49,7 @@ function filterProducts()
 
 		$categoryId = $_GET['categoryId'];
 
-		$sql = "SELECT ProductName, ProductCost, productId 
+		$sql = "SELECT `ProductID`, `ProductName`, `ProductCost`, `ProductDescription`, `categoryID`, `healthyChoice` 
                 FROM products
                 WHERE categoryId = :categoryId";
 		//using Named Parameters (prevents SQL injection)
