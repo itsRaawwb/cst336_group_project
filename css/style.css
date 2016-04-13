@@ -16,3 +16,8 @@ th
 {
     font-weight: bold;
 }
+#colTitle
+{
+	font-weight: bold;
+	background-color: yellow;
+}
