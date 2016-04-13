@@ -32,7 +32,7 @@ function displayCategories()
 	
 	foreach ($records as $record) 
 	{
-		echo "<option value = '" . $record['categoryId'] . "'>" . $record['categoryName'] . "</option>";
+		echo "<option value = '" . $record['categoryId'] . "'>" . $record['ProductType'] . "</option>";
 	}
 }
 
