@@ -1,5 +1,29 @@
 <!--Testing a push-->
+<?php
 
+include 'includes/database.php';
+
+$conn = getDatabaseConnection();
+
+#function that returns all products in the Product table
+function displayAllProducts() {
+    $sql = "SELECT ProductName, ProductCost, productId FROM Product";
+    $records = getDataBySQL($sql);
+    return $records;
+}
+
+
+function isHealthyChoiceChecked() 
+{
+
+	if (isset($_GET['healthyChoice'])) 
+	{
+		return "checked";
+	}
+
+}
+
+?>
 
 <!DOCTYPE html>
 <html>
