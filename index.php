@@ -47,25 +47,42 @@ function filterProducts()
 	if (isset($_GET['searchForm'])) 
 	{//user submitted the filter form
 
-		$categoryId = $_GET['categoryId'];
+		//assign all the search options to variables
+		$categoryId = $_GET['Category'];
+		$maxProductCost = $_GET['maxProductCost'];
+		
+
 
 		$sql = "SELECT `ProductID`, `ProductName`, `ProductCost`, `ProductDescription`, `categoryID`, `healthyChoice` 
                 FROM products
-                WHERE categoryId = :categoryId";
+                WHERE ";
 		//using Named Parameters (prevents SQL injection)
 
 		$namedParameters = array();
-		$namedParameters[":categoryId"] = $categoryId;
+		$namedParameters["categoryId"] = $categoryId;
 
-		$maxProductCost = $_GET['maxProductCost'];
-
-		if (!empty($maxProductCost)) 
-		{//the user entered a max ProductCost value in the form
-			//$sql = $sql . " ";
-			$sql .= " AND ProductCost <= :ProductCost";
-			//using named parameters
-			$namedParameters[":ProductCost"] = $maxProductCost;
+		//checks to see if the user wants to see all
+		if($categoryId !="0"){
+			$sql .= "categoryID = $categoryId";
+		} else {
+			$sql .= "categoryID > 0";
 		}
+		
+		//checks to see what the cost search parameters are
+		if (empty($maxProductCost)) 
+		{
+			$maxProductCost = 50;
+			//the user entered a max ProductCost value in the form
+			$sql .= " AND ProductCost <= $maxProductCost";
+			//using named parameters
+			$namedParameters["ProductCost"] = $maxProductCost;
+		}
+		else{
+			$sql .= " AND ProductCost <= $maxProductCost";	
+			$namedParameters["ProductCost"] = $maxProductCost;
+		}
+		
+		//checks for healthy
 		if (isset($_GET['healthyChoice'])) 
 		{
 			$sql .= " AND healthyChoice = 1";
@@ -73,8 +90,6 @@ function filterProducts()
 
 		$orderByFields = array("ProductCost", "ProductName");
 		$orderByIndex = array_search($_GET['orderBy'], $orderByFields);
-
-		//$sql .= " ORDER BY " . $_GET['orderBy'];
 
 		$sql .= " ORDER BY " . $orderByFields[$orderByIndex];
 
@@ -112,22 +127,29 @@ function filterProducts()
             <h1>Otter Express Online</h1>
         </header>
 
-        <form method = "get" action = "index.php">
+        <form method = "GET" action = "index.php">
             Select Category:
             <select name = "Category">
                 <!-- this will come from database -->
-                
-                // <?php 
-                // displayCategories();
-                // ?>
+                <option value="0">All</option>
+                <option value="1">Entree</option>
+                <option value="6">Side</option>
+                <option value="3">Beer</option>
+                <option value="4">Wine</option>
+                <option value="5">Cocktail</option>
+                <option value="7">Drink</option>
+                <option value="8">Salad</option>
+                <option value="9">Meal</option>
             </select>
             <br>
-            Max ProductCost:
-            <input type="number" min="0" name="maxProductCost" value=="<?=$_GET['maxProductCost'] ?>">
+            
+            Max ProductCost: $
+            <input type="number" min="0" max="50" name="maxProductCost" >
             <br>
-            <input type="checkbox" name="healthyChoice" id="healthyChoice"  <?=isset($_GET['healthyChoice']) ? "checked" : "" ?> />
+            <input type="checkbox" name="healthyChoice" id="healthyChoice"  value="healthy" />
 			<label for="healthyChoice">Healthy Choice</label>
 			<br>
+			
 			Order By:
 			<select name="orderBy">
 			    <option value="ProductCost">ProductCost</option>
@@ -157,55 +179,48 @@ function filterProducts()
 				echo "<td id = 'colTitle'>";
 				echo "Name";
 				echo "</td>";
+				
 				echo "<td id = 'colTitle'>";
 				echo "Product Cost";
 				echo "</td>";
-				echo "<td id = 'colTitle'>";
-				echo "Healthy Choice";
-				echo "</td>";
-				echo "<td id = 'colTitle'>";
-				echo "Description";
-				echo "</td>";
+				
+				// echo "<td id = 'colTitle'>";
+				// echo "Healthy Choice";
+				// echo "</td>";
+				
+				// echo "<td id = 'colTitle'>";
+				// echo "Description";
+				// echo "</td>";
 				echo "</tr>";
 
 				foreach ($records as $record) 
 				{
 					echo "<tr>";
 					echo "<td>";
-					echo "<a target = 'getProductIframe' href='getProductInfo.php?ProductId=" . $record['ProductId'] . "'>";
 					echo $record['ProductName'];
-					echo "</a>";
 					echo "</td>";
+					
 					echo "<td>";
 					echo "$ " . $record['ProductCost'];
 					echo "</td>";
-					echo "<td>";
-					echo $record['healthyChoice'];
-					echo "</td>";
-					echo "<td>";
-					echo $record['ProductDescription'];
-					echo "</td>";
+					
+					// echo "<td>";
+					// echo $record['healthyChoice'];
+					// echo "</td>";
+					// echo "<td>";
+					// echo $record['ProductDescription'];
+					// echo "</td>";
 					echo "</tr>";
 				}
 				echo "</table>";
 				?>
 			</div>
-			<div style="float:left">
-
-				<iframe src="getProductInfo.php" name="getProductIframe" width="250" height="300" frameborder="0"/></iframe>
-
-			</div>
-
-
-
-        <footer>
+        <footer class="footer">
         	<hr>
-            <br>
-            <br>
-            CST 336 Team Project
-            Robert Macias
-            Harrison Oglesby
-            Spring 2016
+            CST 336 Team Project<br />
+            Robert Macias<br />
+            Harrison Oglesby<br />
+            Spring 2016<br />
             
         </footer>
     </body>
