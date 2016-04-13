@@ -4,7 +4,7 @@ include 'includes/database.php'
 ?>
 <html>
     <head>
-            <meta charset="utf-8">
+                    <meta charset="utf-8">
             <meta name="viewport" content="width=device-width">
             <title>Checkout</title>
             <link rel="shortcut icon" href="https://csumb.edu/sites/default/files/pixelotter.png" type="image/png">
@@ -32,57 +32,32 @@ include 'includes/database.php'
     
     
     
-    if(count($_SESSION['cart_items'])>0){
- 
-        // get the product ids
-        $ids = "";
-        foreach($_SESSION['cart_items'] as $id=>$value){
-            $ids = $ids . $id . ",";
-        }
-     
-        // remove the last comma
-        $ids = rtrim($ids, ',');
-     
+    if(count($_SESSION['ids'])>0){
+
         //start table
-        echo "<table class='table'>";
+        echo "<table>";
      
             // our table heading
             echo "<tr>";
                 echo "<th>Product Name</th>";
                 echo "<th>Price</th>";
-                echo "<th>Action</th>";
             echo "</tr>";
      
-            $query = "SELECT ProductID, ProductName, ProductCost FROM products WHERE id IN ({$ids}) ORDER BY name";
-     
-            $stmt = $con->prepare( $query );
-            $stmt->execute();
-     
-            $total_price=0;
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                extract($row);
-     
+            $x = 0;
+            foreach($_SESSION['ids'] as $row){
                 echo "<tr>";
-                    echo "<td>{$name}</td>";
-                    echo "<td>&#36;{$price}</td>";
-                    echo "<td>";
-                        echo "<a href='remove_from_cart.php?id={$id}&name={$name}'>";
-                            echo "<span'></span> Remove from cart";
-                        echo "</a>";
-                    echo "</td>";
-                echo "</tr>";
+                echo "<td>".$_SESSION['names'][$x];
+                echo "</ td>";
+                echo "<td>". $_SESSION['cost'][$x];
+                echo"</td>";
+                $x++;
+            } 
+           
      
-                $total_price+=$price;
-            }
      
             echo "<tr>";
                     echo "<td><b>Total</b></td>";
-                    echo "<td>&#36;{$total_price}</td>";
-                    echo "<td>";
-                        echo "<a>";
-                            echo "<span></span> Checkout";
-                        echo "</a>";
-                    echo "</td>";
+                    echo "<td>".$_SESSION["totalCost"]."</td>";
                 echo "</tr>";
      
         echo "</table>";
@@ -93,6 +68,10 @@ include 'includes/database.php'
             echo "<strong>No products found</strong> in your cart!";
         echo "</div>";
     }
+    
+    echo '<a href="destroy.php">';
+    echo "Checkout and Start New Order! YUM!";
+    echo '</a>';
 ?>
     </body>
 </html>

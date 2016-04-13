@@ -22,3 +22,9 @@ th
 	font-weight: bold;
 	background-color: yellow;
 }
+
+table{
+	border:2;
+	font-family: sans-serif;
+	font-size: 1.2em;
+}

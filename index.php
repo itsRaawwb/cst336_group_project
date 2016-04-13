@@ -148,6 +148,18 @@ function filterProducts()
 				{
 					$records = filterProducts();
 				}
+				
+				
+				// to prevent undefined index notice
+				$action = isset($_GET['action']) ? $_GET['action'] : "";
+				$name = isset($_GET['name']) ? $_GET['name'] : "";
+				//Tell users an item was added
+				if($action=='added'){
+				    echo "<div class='alert alert-info'>";
+				        echo "<strong>{$name}</strong> was added to your cart!";
+				    echo "</div>";
+				}
+ 
 
 				echo "<table border = 1>";
 				echo "<tr>";
@@ -167,7 +179,6 @@ function filterProducts()
 					$name = $record['ProductName'];
 					$cost = $record['ProductCost'];
 					
-					
 					echo "<tr>";
 					echo "<td>";
 					echo "<a>";
@@ -180,8 +191,7 @@ function filterProducts()
 					echo "</td>";
 					
 					echo "<td>";
-					echo "<a href=\"add_to_cart.php?id={$record['$id']}
-							&name={$record['$name']}&price={$record['$cost']}\""; 
+					echo "<a href=\"add_to_cart.php?id=$id&name=$name&cost=$cost\""; 
 						echo "<span></span>add to cart";
 					// echo "</a>";
 					echo "</td>";
@@ -190,6 +200,7 @@ function filterProducts()
 				}
 				echo "</table>";
 
+				echo '<a href="checkout.php">Checkout</a>';
 				?>
 			</div>
         <footer class="footer">
