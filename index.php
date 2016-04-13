@@ -23,6 +23,19 @@ function isHealthyChoiceChecked()
 
 }
 
+function displayCategories() 
+{
+	$sql = "SELECT categoryId, categoryName
+        	FROM oe_category WHERE 1";
+			
+	$records = getDataBySQL($sql);
+	
+	foreach ($records as $record) 
+	{
+		echo "<option value = '" . $record['categoryId'] . "'>" . $record['categoryName'] . "</option>";
+	}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -57,17 +70,65 @@ function isHealthyChoiceChecked()
             <input type="number" min="0" name="maxPrice" value=="<?=$_GET['maxPrice'] ?>">
             
             <input type="checkbox" name="healthyChoice" id="healthyChoice"  <?=isset($_GET['healthyChoice']) ? "checked" : "" ?> />
-				<label for="healthyChoice">Healthy Choice</label>
+			<label for="healthyChoice">Healthy Choice</label>
 
-				OrderBy:
-				<select name="orderBy">
-					<option value="price">Price</option>
-					<option value="productName">Name</option>
-
-				</select>
+			OrderBy:
+			<select name="orderBy">
+			    <option value="price">Price</option>
+			    <option value="productName">Name</option>
+			</select>
 				<br />
 				<input type="submit" value="Search Products" name="searchForm" />
 			</form>
+			
+			<hr>
+			<br />
+			<div style="float:left">
+				<?php
+
+				//Displays all products by default
+				if (!isset($_GET['searchForm'])) 
+				{
+					$records = displayAllProducts();
+				} 
+				else 
+				{
+					$records = filterProducts();
+				}
+
+				echo "<table border = 1>";
+				echo "<tr>";
+				echo "<td id = 'colTitle'>";
+				echo "Name";
+				echo "</td>";
+				echo "<td id = 'colTitle'>";
+				echo "Price";
+				echo "</td>";
+				echo "</tr>";
+
+				foreach ($records as $record) 
+				{
+					echo "<tr>";
+					echo "<td>";
+					echo "<a target = 'getProductIframe' href='getProductInfo.php?productId=" . $record['productId'] . "'>";
+					echo $record['productName'];
+					echo "</a>";
+					echo "</td>";
+					echo "<td>";
+					echo "$ " . $record['price'];
+					echo "</td>";
+					echo "</tr>";
+				}
+				echo "</table>";
+				?>
+			</div>
+			<div style="float:left">
+
+				<iframe src="getProductInfo.php" name="getProductIframe" width="250" height="300" frameborder="0"/></iframe>
+
+			</div>
+
+
 
         <footer>
             <br>
