@@ -25,7 +25,7 @@ function isHealthyChoiceChecked()
 
 function displayCategories() 
 {
-	$sql = "SELECT categoryId, categoryName
+	$sql = "SELECT categoryID, categoryName
         	FROM oe_category WHERE 1";
 			
 	$records = getDataBySQL($sql);
