@@ -8,7 +8,7 @@ $conn = getDatabaseConnection();
 //function that returns all products in the Product table
 function displayAllProducts() {
 	global $conn;
-    $sql = "SELECT 'ProductName', 'ProductCost', 'ProductID' FROM 'products'";
+    $sql = "SELECT `ProductID`, `ProductName`, `ProductCost`, `ProductDescription`, `categoryID`, `healthyChoice` FROM `products` WHERE 1 LIMIT 0, 30 ";
     $records = getDataBySQL($conn, $sql);
     return $records;
 }
