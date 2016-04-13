@@ -10,8 +10,8 @@ if(isset($_GET['ProductID'])){
 	$records = getDataBySQL($sql);
 	
 	foreach ($records as $record) {
-		// echo "Product Name: " . $record['ProductName'] . "<br />";
-		// echo "Product Description: " . $record['ProductDescription'] . "<br />";
+		echo "Product Name: " . $record['ProductName'] . "<br />";
+		echo "Product Description: " . $record['ProductDescription'] . "<br />";
 	}
 } 
 

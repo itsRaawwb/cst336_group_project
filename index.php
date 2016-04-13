@@ -13,33 +13,6 @@ function displayAllProducts() {
     return $records;
 }
 
-
-function isHealthyChoiceChecked() 
-{
-
-	if (isset($_GET['healthyChoice'])) 
-	{
-		return "checked";
-	}
-
-}
-
-function displayCategories() 
-{
-	global $conn;
-
-	$sql = "SELECT categoryId, categoryName
-        	FROM Category WHERE 1";
-
-			
-	$records = getDataBySQL($conn ,$sql);
-	
-	foreach ($records as $record) 
-	{
-		echo "<option value = '" . $record['categoryId'] . "'>" . $record['categoryName'] . "</option>";
-	}
-}
-
 function filterProducts() 
 {
 	global $conn;
@@ -144,7 +117,7 @@ function filterProducts()
             <br>
             
             Max ProductCost: $
-            <input type="number" min="0" max="50" name="maxProductCost" >
+            <input type="number" min="4" max="50" name="maxProductCost" >
             <br>
             <input type="checkbox" name="healthyChoice" id="healthyChoice"  value="healthy" />
 			<label for="healthyChoice">Healthy Choice</label>
@@ -163,6 +136,7 @@ function filterProducts()
 			<br />
 			<div style="float:left">
 				<?php
+				session_start();
 
 				//Displays all products by default
 				if (!isset($_GET['searchForm'])) 
@@ -173,6 +147,32 @@ function filterProducts()
 				{
 					$records = filterProducts();
 				}
+				
+
+				
+				
+				// $action = isset($_GET['action']) ? $_GET['action'] : "";
+				// $product_id = isset($_GET['']) ? $_GET['product_id'] : "1";
+				// $name = isset($_GET['name']) ? $_GET['name'] : "";
+				 
+				// if($action=='added'){
+				//     echo "<div class='alert alert-info'>";
+				//         echo "<strong>{$name}</strong> was added to your cart!";
+				//     echo "</div>";
+				// }
+				 
+				// if($action=='exists'){
+				//     echo "<div class='alert alert-info'>";
+				//         echo "<strong>{$name}</strong> already exists in your cart!";
+				//     echo "</div>";
+				// }
+							
+				
+				
+				
+				
+				
+				
 
 				echo "<table border = 1>";
 				echo "<tr>";
@@ -183,14 +183,6 @@ function filterProducts()
 				echo "<td id = 'colTitle'>";
 				echo "Product Cost";
 				echo "</td>";
-				
-				// echo "<td id = 'colTitle'>";
-				// echo "Healthy Choice";
-				// echo "</td>";
-				
-				// echo "<td id = 'colTitle'>";
-				// echo "Description";
-				// echo "</td>";
 				echo "</tr>";
 
 				foreach ($records as $record) 
@@ -204,15 +196,20 @@ function filterProducts()
 					echo "$ " . $record['ProductCost'];
 					echo "</td>";
 					
-					// echo "<td>";
-					// echo $record['healthyChoice'];
-					// echo "</td>";
-					// echo "<td>";
-					// echo $record['ProductDescription'];
-					// echo "</td>";
+					echo "<td>";
+		                echo "<a href='add_to_cart.php?id={$id}&name={$name}'>";
+        	                echo "<span></span> Add to cart";
+    	                echo "</a>";
+	                echo "</td>";
+
+					
 					echo "</tr>";
+					
+					
+					
 				}
 				echo "</table>";
+
 				?>
 			</div>
         <footer class="footer">

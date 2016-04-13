@@ -4,7 +4,7 @@ include 'includes/database.php'
 ?>
 <html>
     <head>
-                    <meta charset="utf-8">
+            <meta charset="utf-8">
             <meta name="viewport" content="width=device-width">
             <title>Checkout</title>
             <link rel="shortcut icon" href="https://csumb.edu/sites/default/files/pixelotter.png" type="image/png">
@@ -80,7 +80,7 @@ include 'includes/database.php'
                     echo "<td>&#36;{$total_price}</td>";
                     echo "<td>";
                         echo "<a>";
-                            echo "<span class='glyphicon glyphicon-shopping-cart'></span> Checkout";
+                            echo "<span></span> Checkout";
                         echo "</a>";
                     echo "</td>";
                 echo "</tr>";
