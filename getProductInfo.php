@@ -4,13 +4,13 @@ include 'includes/database.php';
 
 $conn = getDatabaseConnection();
 
-if(isset($_GET['productId'])){
-   "SELECT productName, productDescription
-    FROM ProductDescription WHERE productId = " . $_GET['productId'];
+if(isset($_GET['ProductID'])){
+   "SELECT ProductName, ProductDescription
+    FROM products WHERE ProductId = " . $_GET['ProductID'];
 	$records = getDataBySQL($sql);
 	foreach ($records as $record) {
-		echo "ProductName: " . $record['productName'] . "<br />";
-		echo "ProductDescription: " . $record['productDescription'] . "<br />";
+		echo "Product Name: " . $record['ProductName'] . "<br />";
+		echo "Product Description: " . $record['ProductDescription'] . "<br />";
 	}
 } 
 
