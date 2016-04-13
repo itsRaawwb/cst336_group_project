@@ -25,16 +25,64 @@ function isHealthyChoiceChecked()
 
 function displayCategories() 
 {
-	$sql = "SELECT categoryId, categoryName
-        	FROM oe_category WHERE 1";
+	$sql = "SELECT Category
+        	FROM products WHERE 1";
 			
 	$records = getDataBySQL($sql);
 	
 	foreach ($records as $record) 
 	{
-		echo "<option value = '" . $record['categoryId'] . "'>" . $record['ProductType'] . "</option>";
+		echo "<option value = '" . $record['Category'] . "'>" . $record['Category'] . "</option>";
 	}
 }
+
+unction filterProducts() 
+{
+	global $conn;
+	
+	if (isset($_GET['searchForm'])) 
+	{//user submitted the filter form
+
+		$Category = $_GET['Category'];
+
+		$sql = "SELECT ProductName, ProductCost, productId 
+                FROM products
+                WHERE Category = :Category";
+		//using Named Parameters (prevents SQL injection)
+
+		$namedParameters = array();
+		$namedParameters[":Category"] = $Category;
+
+		$maxProductCost = $_GET['maxProductCost'];
+
+		if (!empty($maxProductCost)) 
+		{//the user entered a max ProductCost value in the form
+			//$sql = $sql . " ";
+			$sql .= " AND ProductCost <= :ProductCost";
+			//using named parameters
+			$namedParameters[":ProductCost"] = $maxProductCost;
+		}
+		if (isset($_GET['healthyChoice'])) 
+		{
+			$sql .= " AND healthyChoice = 1";
+		}
+
+		$orderByFields = array("ProductCost", "ProductName");
+		$orderByIndex = array_search($_GET['orderBy'], $orderByFields);
+
+		//$sql .= " ORDER BY " . $_GET['orderBy'];
+
+		$sql .= " ORDER BY " . $orderByFields[$orderByIndex];
+
+		$statement = $conn -> prepare($sql);
+		$statement -> execute($namedParameters);
+		$records = $statement -> fetchAll(PDO::FETCH_ASSOC);
+		return $records;
+
+	}
+
+}
+
 
 ?>
 
@@ -62,20 +110,20 @@ function displayCategories()
 
         <form method = "get" action = "index.php">
             Select Category:
-            <select name = "categoryId">
+            <select name = "Category">
                 <!-- this will come from database -->
             </select>
             
-            Max Price:
-            <input type="number" min="0" name="maxPrice" value=="<?=$_GET['maxPrice'] ?>">
+            Max ProductCost:
+            <input type="number" min="0" name="maxProductCost" value=="<?=$_GET['maxProductCost'] ?>">
             
             <input type="checkbox" name="healthyChoice" id="healthyChoice"  <?=isset($_GET['healthyChoice']) ? "checked" : "" ?> />
 			<label for="healthyChoice">Healthy Choice</label>
 
 			OrderBy:
 			<select name="orderBy">
-			    <option value="price">Price</option>
-			    <option value="productName">Name</option>
+			    <option value="ProductCost">ProductCost</option>
+			    <option value="ProductName">Name</option>
 			</select>
 				<br />
 				<input type="submit" value="Search Products" name="searchForm" />
@@ -102,7 +150,7 @@ function displayCategories()
 				echo "Name";
 				echo "</td>";
 				echo "<td id = 'colTitle'>";
-				echo "Price";
+				echo "ProductCost";
 				echo "</td>";
 				echo "</tr>";
 
@@ -111,11 +159,11 @@ function displayCategories()
 					echo "<tr>";
 					echo "<td>";
 					echo "<a target = 'getProductIframe' href='getProductInfo.php?productId=" . $record['productId'] . "'>";
-					echo $record['productName'];
+					echo $record['ProductName'];
 					echo "</a>";
 					echo "</td>";
 					echo "<td>";
-					echo "$ " . $record['price'];
+					echo "$ " . $record['ProductCost'];
 					echo "</td>";
 					echo "</tr>";
 				}
