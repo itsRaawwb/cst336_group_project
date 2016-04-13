@@ -27,34 +27,34 @@ function displayCategories()
 {
 
 
-	$sql = "SELECT Category
-        	FROM products WHERE 1";
+	$sql = "SELECT categoryId, categoryName
+        	FROM Category WHERE 1";
 
 			
 	$records = getDataBySQL($sql);
 	
 	foreach ($records as $record) 
 	{
-		echo "<option value = '" . $record['Category'] . "'>" . $record['Category'] . "</option>";
+		echo "<option value = '" . $record['categoryId'] . "'>" . $record['categoryName'] . "</option>";
 	}
 }
 
-unction filterProducts() 
+function filterProducts() 
 {
 	global $conn;
 	
 	if (isset($_GET['searchForm'])) 
 	{//user submitted the filter form
 
-		$Category = $_GET['Category'];
+		$categoryId = $_GET['categoryId'];
 
 		$sql = "SELECT ProductName, ProductCost, productId 
                 FROM products
-                WHERE Category = :Category";
+                WHERE categoryId = :categoryId";
 		//using Named Parameters (prevents SQL injection)
 
 		$namedParameters = array();
-		$namedParameters[":Category"] = $Category;
+		$namedParameters[":categoryId"] = $categoryId;
 
 		$maxProductCost = $_GET['maxProductCost'];
 
@@ -115,6 +115,8 @@ unction filterProducts()
             Select Category:
             <select name = "Category">
                 <!-- this will come from database -->
+                
+                <?=displayCategories()?>
             </select>
             
             Max ProductCost:
