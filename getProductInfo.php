@@ -6,7 +6,7 @@ $conn = getDatabaseConnection();
 
 if(isset($_GET['productId'])){
    SELECT productName, productDescription
-    FROM oe_product WHERE productId = " . $_GET['productId'];
+    FROM ProductDescription WHERE productId = " . $_GET['productId'];
 	$records = getDataBySQL($sql);
 	foreach ($records as $record) {
 		echo "ProductName: " . $record['productName'] . "<br />";
