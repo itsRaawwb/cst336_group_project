@@ -39,7 +39,7 @@ function displayCategories()
 	}
 }
 
-unction filterProducts() 
+function filterProducts() 
 {
 	global $conn;
 	
