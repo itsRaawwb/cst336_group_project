@@ -7,8 +7,8 @@ $conn = getDatabaseConnection();
 
 //function that returns all products in the Product table
 function displayAllProducts() {
-    $sql = "SELECT ProductName, ProductCost, productId FROM Product";
-    $records = getDataBySQL($sql);
+    $sql = "SELECT 'ProductName', 'ProductCost', 'ProductID' FROM 'products'";
+    $records = getDataBySQL($dbConn, $sql);
     return $records;
 }
 
