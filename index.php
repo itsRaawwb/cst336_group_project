@@ -116,7 +116,9 @@ function filterProducts()
             <select name = "Category">
                 <!-- this will come from database -->
                 
-                <?=displayCategories()?>
+                // <?php 
+                // displayCategories();
+                // ?>
             </select>
             
             Max ProductCost:
